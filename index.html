@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gewichte umrechnen für Hexen</title>
+    <title>Gewichte umrechnen</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -53,13 +53,71 @@
     </style>
 </head>
 <body>
-<math>
-  <mfrac>
-    <mn>1</mn>
-    <mn>2</mn>
-  </mfrac>
-</math>
     <div class="container">
+
+        <button onclick="openOverlay()">Info</button>
+    
+        <script>
+            function openOverlay() {
+                let overlay = document.createElement("div");
+                overlay.id = "infoOverlay";
+                overlay.style.position = "fixed";
+                overlay.style.top = "0";
+                overlay.style.left = "0";
+                overlay.style.width = "100%";
+                overlay.style.height = "100%";
+                overlay.style.background = "rgba(0, 0, 0, 0.7)";
+                overlay.style.display = "flex";
+                overlay.style.justifyContent = "center";
+                overlay.style.alignItems = "center";
+                
+                let overlayContent = document.createElement("div");
+                overlayContent.style.background = "white";
+                overlayContent.style.padding = "20px";
+                overlayContent.style.width = "50ch";
+                overlayContent.style.borderRadius = "8px";
+                overlayContent.style.position = "relative";
+                overlayContent.style.overflowX = "auto";
+                
+                let closeButton = document.createElement("span");
+                closeButton.innerHTML = "&times;";
+                closeButton.style.position = "absolute";
+                closeButton.style.top = "10px";
+                closeButton.style.right = "15px";
+                closeButton.style.fontSize = "20px";
+                closeButton.style.cursor = "pointer";
+                closeButton.onclick = function() {
+                    document.body.removeChild(overlay);
+                };
+                
+                let heading = document.createElement("h2");
+                heading.innerText = "Information";
+                
+                let paragraph = document.createElement("div");
+                paragraph.innerHTML = "<p>g = Gramm ~ kg = Kilogramm ~ t = Tonne</p><p><math><mfrac><mn>1</mn><mn>4</mn></mfrac></math> kg = 250 g ~ <math><mfrac><mn>1</mn><mn>2</mn></mfrac></math> kg = 500 g ~ <math><mfrac><mn>3</mn><mn>4</mn></mfrac></math> kg = 750 g</p>";
+                let table = document.createElement("table");
+                table.style.width = "100%";
+                table.style.borderCollapse = "collapse";
+                table.innerHTML = `
+                    <tr>
+                        <td style="border: 1px solid black; padding: 5px;">1000 g = 1 kg</td>
+                        <td style="border: 1px solid black; padding: 5px;">1 t = 1000 kg</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black; padding: 5px;">1000 kg = 1 t</td>
+                        <td style="border: 1px solid black; padding: 5px;">1 kg = 1000 g</td>
+                    </tr>
+                `;
+                
+                overlayContent.appendChild(closeButton);
+                overlayContent.appendChild(heading);
+                overlayContent.appendChild(paragraph);
+                overlayContent.appendChild(table);
+                overlay.appendChild(overlayContent);
+                document.body.appendChild(overlay);
+            }
+        </script>
+
         <h2>Gewichte umrechnen 2</h2>
         <div class="question" id="question"></div>
         <div id="answers"></div>
@@ -73,11 +131,11 @@
 
     <script>
         const questions = [
-            { question: "250 g = ? kg", correct: "<math><mfrac><mn>1</mn><mn>4</mn></mfrac></math> ", options: ["<math><mfrac><mn>3</mn><mn>4</mn></mfrac></math> ", "<math><mfrac><mn>1</mn><mn>2</mn></mfrac></math> ", "<math><mfrac><mn>1</mn><mn>4</mn></mfrac></math> ", "250"] },
-            { question: "500 g = ? kg", correct: "<math><mfrac><mn>1</mn><mn>2</mn></mfrac></math> ", options: ["<math><mfrac><mn>3</mn><mn>4</mn></mfrac></math> ", "<math><mfrac><mn>1</mn><mn>2</mn></mfrac></math> ", "<math><mfrac><mn>1</mn><mn>4</mn></mfrac></math> ", "500"] },
+            { question: "250 g = ? kg", correct: "<math><mfrac><mn>1</mn><mn>4</mn></mfrac></math>", options: ["<math><mfrac><mn>3</mn><mn>4</mn></mfrac></math> ", "<math><mfrac><mn>1</mn><mn>2</mn></mfrac></math> ", "<math><mfrac><mn>1</mn><mn>4</mn></mfrac></math> ", "250"] },
+            { question: "500 g = ? kg", correct: "<math><mfrac><mn>1</mn><mn>2</mn></mfrac></math>", options: ["<math><mfrac><mn>3</mn><mn>4</mn></mfrac></math> ", "<math><mfrac><mn>1</mn><mn>2</mn></mfrac></math> ", "<math><mfrac><mn>1</mn><mn>4</mn></mfrac></math> ", "500"] },
             { question: "750 g = ? kg", correct: "<math><mfrac><mn>3</mn><mn>4</mn></mfrac></math>", options: ["<math><mfrac><mn>3</mn><mn>4</mn></mfrac></math>", "<math><mfrac><mn>1</mn><mn>4</mn></mfrac></math>", "<math><mfrac><mn>1</mn><mn>2</mn></mfrac></math>", "750"] },
-            { question: "250 kg = ? t", correct: "<math><mfrac><mn>1</mn><mn>4</mn></mfrac></math> ", options: ["<math><mfrac><mn>3</mn><mn>4</mn></mfrac></math> ", "<math><mfrac><mn>1</mn><mn>2</mn></mfrac></math> ", "<math><mfrac><mn>1</mn><mn>4</mn></mfrac></math> ", "250"] },
-            { question: "500 kg = ? t", correct: "<math><mfrac><mn>1</mn><mn>2</mn></mfrac></math> ", options: ["<math><mfrac><mn>3</mn><mn>4</mn></mfrac></math> ", "<math><mfrac><mn>1</mn><mn>2</mn></mfrac></math> ", "<math><mfrac><mn>1</mn><mn>4</mn></mfrac></math> ", "500"] },
+            { question: "250 kg = ? t", correct: "<math><mfrac><mn>1</mn><mn>4</mn></mfrac></math>", options: ["<math><mfrac><mn>3</mn><mn>4</mn></mfrac></math> ", "<math><mfrac><mn>1</mn><mn>2</mn></mfrac></math> ", "<math><mfrac><mn>1</mn><mn>4</mn></mfrac></math> ", "250"] },
+            { question: "500 kg = ? t", correct: "<math><mfrac><mn>1</mn><mn>2</mn></mfrac></math>", options: ["<math><mfrac><mn>3</mn><mn>4</mn></mfrac></math> ", "<math><mfrac><mn>1</mn><mn>2</mn></mfrac></math> ", "<math><mfrac><mn>1</mn><mn>4</mn></mfrac></math> ", "500"] },
             { question: "750 kg = ? t", correct: "<math><mfrac><mn>3</mn><mn>4</mn></mfrac></math>", options: ["<math><mfrac><mn>3</mn><mn>4</mn></mfrac></math>", "<math><mfrac><mn>1</mn><mn>4</mn></mfrac></math>", "<math><mfrac><mn>1</mn><mn>2</mn></mfrac></math>", "750"] },
 
 
